@@ -15,12 +15,9 @@ request.send();
 
 request.responseType = 'json';
 
-//document.getElementById("banniere_description").innerHTML = "TEST";
-
 //La réponse du serveur et son traitement.
 request.onload = function() {
     var recettes = request.response;
-//    populateTitle(recettes);
     dropDownRecipes(recettes);  // function à modifier
   }
 
@@ -34,15 +31,9 @@ for (var i=0; i < jsonObj.length; i++){
         option.text = jsonObj[i]['title'];
         option.value = jsonObj[i]['id'];
         recettes_sel.add(option);
-    }
-
-}
-
+        }
+    }   
 }  
-
-function populateTitle(jsonObj) {
-    document.getElementById("baniere_title_text").innerHTML = jsonObj[0]['title'];
-    }
 
 function findRecipe(id) {
     var rec = request.response;
@@ -51,15 +42,12 @@ function findRecipe(id) {
             return rec[i];
         }
     }
-    }
+}
 
-const newLocal = "href";
 function uneRecette() {
 var ele = document.getElementById("choix_recette");
 var idR = ele.options[ele.selectedIndex].value;
-console.log(ele);
 
-// Recuperation des data json de la recette correspondante a l'id
 recipe = findRecipe(idR);
 var titleR = recipe["title"];
 var descR = recipe["directions"];
@@ -70,29 +58,12 @@ var ingredR = recipe["ingredients"].split('\n');
 var imgSrcR = recipe["photoUrl"];
 var urlRecette = recipe["source"]
 
-//    var dirR = recipe["directions"];
-
-// Image de la recette
-//var imgR = document.getElementById("imgR");
-//imgR.setAttribute("src", imgSrcR);
 document.getElementById("baniere_title_text").innerHTML = titleR;     
 document.getElementById("banniere_image").style.background = "url("+imgSrcR+") no-repeat center / cover";
-
 document.getElementById('bouton_rouge').setAttribute("href", urlRecette);
 document.getElementById("temps_preparation").innerHTML = prepTimeR + " minutes";
 document.getElementById("temps_cuisson").innerHTML = cookTimeR + " minutes";
 document.getElementById("temps_total").innerHTML = totalTimeR + " minutes";
-
-//document.getElementById("ingredients").innerHTML = ingredR
-//document.getElgetElementById('bouton_rouge').href = urlRecette
-
-// // Tableau de temps (total / preparation / cuisson)
-// var tbT = document.getElementById("tableTime");
-// tbT.rows[1].cells[0].innerHTML = totalTimeR + " min"
-// tbT.rows[1].cells[1].innerHTML = prepTimeR + " min"
-// tbT.rows[1].cells[2].innerHTML = cookTimeR + " min"
-
-// Description de la recette
 document.getElementById("description").innerHTML = descR;
 
 // // Ingredients listes dans une liste à puce
@@ -103,6 +74,5 @@ for (var j=0; j<ingredR.length; j++) {
     ingL.append(ingItem);
 }
 
-// // Instructions pour la recette
-// document.getElementById("instR").innerHTML = dirR;
+
 }
